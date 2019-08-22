@@ -1,18 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
 import { IntlProvider } from 'react-intl';
-import store from './store';
+import { ConnectedRouter } from 'connected-react-router';
+import { store, history } from './store';
 
 import App from './components/App';
 
 ReactDOM.render(
   <Provider store={store}>
     <IntlProvider locale="en">
-      <BrowserRouter>
+      <ConnectedRouter history={history}>
         <App />
-      </BrowserRouter>
+      </ConnectedRouter>
     </IntlProvider>
   </Provider>,
   document.getElementById('root')

@@ -1,8 +1,8 @@
 import { Map } from 'immutable';
 import { combineReducers } from 'redux';
 import { handleActions } from 'redux-actions';
-import { questions, initialQuestionsState } from './questions/questions';
-import { name, initialNameState } from './name/name';
+import { questions, initialQuestionsState } from './survey/questions';
+import { name, initialNameState } from './survey/name';
 
 export const initialSurveyState = Map({
   name: initialNameState,

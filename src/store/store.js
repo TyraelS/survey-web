@@ -4,24 +4,29 @@ import { Map } from 'immutable';
 import promise from 'redux-promise-middleware';
 import thunkMiddleware from 'redux-thunk';
 import { reducer as formReducer } from 'redux-form/immutable';
-import { admins, initialAdminsState } from './admins/admins';
-import { questions, initialQuestionsState } from './questions/questions';
-import { students, initialStudentsState } from './students/students';
-import { survey, initialSurveyState } from './survey/survey';
-import { surveys, initialSurveysState } from './surveys/surveys';
-import { surveyStudents, initialSurveyStudentsState } from './surveyStudents/surveyStudents';
-import { teachers, initialTeachersState } from './teachers/teachers';
-import { userProfile, initialUserProfileState } from './userProfile/userProfile';
-import { userSession, initialUserSessionState } from './userSession/userSession';
+import { connectRouter, routerMiddleware } from 'connected-react-router';
+import { createBrowserHistory } from 'history';
+
+import { admins, initialAdminsState } from './admins';
+import { questions, initialQuestionsState } from './questions';
+import { students, initialStudentsState } from './students';
+import { survey, initialSurveyState } from './survey';
+import { surveys, initialSurveysState } from './surveys';
+import { surveyStudents, initialSurveyStudentsState } from './surveyStudents';
+import { teachers, initialTeachersState } from './teachers';
+import { profile, initialProfileState } from './profile';
+import { session, initialSessionState } from './session';
 
 /* eslint-disable no-underscore-dangle */
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const enhancer = composeEnhancers(applyMiddleware(thunkMiddleware, promise));
+export const history = createBrowserHistory();
+
+const enhancer = composeEnhancers(applyMiddleware(thunkMiddleware, promise, routerMiddleware(history)));
 
 const initialStoreState = Map({
-  userSession: initialUserSessionState,
-  userProfile: initialUserProfileState,
+  userSession: initialSessionState,
+  userProfile: initialProfileState,
   surveys: initialSurveysState,
   questions: initialQuestionsState,
   admins: initialAdminsState,
@@ -31,11 +36,12 @@ const initialStoreState = Map({
   surveyStudents: initialSurveyStudentsState
 });
 
-const store = createStore(
+export const store = createStore(
   combineReducers({
     form: formReducer,
-    userSession,
-    userProfile,
+    router: connectRouter(history),
+    session,
+    profile,
     surveys,
     questions,
     admins,
@@ -47,5 +53,3 @@ const store = createStore(
   initialStoreState,
   enhancer
 );
-
-export default store;
