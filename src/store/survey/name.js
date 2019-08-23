@@ -1,13 +1,6 @@
 import { List } from 'immutable';
-import { handleActions, createAction } from 'redux-actions';
-
-export const nameAction = createAction('NAME_ACTION');
+import { handleActions } from 'redux-actions';
 
 export const initialNameState = List();
 
-export const name = handleActions(
-  {
-    [nameAction]: state => state
-  },
-  initialNameState
-);
+export const name = handleActions({}, initialNameState);
